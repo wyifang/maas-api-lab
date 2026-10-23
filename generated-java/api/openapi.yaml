@@ -1,0 +1,186 @@
+openapi: 3.0.3
+info:
+  description: API documentation learning project.
+  license:
+    name: UNLICENSED
+  title: MaaS Demo API
+  version: 1.0.0
+servers:
+- description: Placeholder server; not a live API
+  url: https://api.example.test/v1
+security:
+- BearerAuth: []
+paths:
+  /chat/completions:
+    post:
+      description: Generate a response from a language model.
+      operationId: createChatCompletion
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/createChatCompletion_request"
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/createChatCompletion_200_response"
+          description: Successful response
+        "400":
+          content:
+            application/json:
+              example:
+                error:
+                  code: invalid_request
+                  message: The request parameters are invalid.
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Invalid request
+        "401":
+          content:
+            application/json:
+              example:
+                error:
+                  code: invalid_api_key
+                  message: The API key is invalid.
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Missing or invalid API token
+        "429":
+          content:
+            application/json:
+              example:
+                error:
+                  code: rate_limit_exceeded
+                  message: Too many requests.
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Rate limit exceeded
+        "500":
+          content:
+            application/json:
+              example:
+                error:
+                  code: internal_error
+                  message: An internal server error occurred.
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          description: Internal server error
+      summary: Create a chat completion
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+components:
+  schemas:
+    ErrorResponse:
+      example:
+        error:
+          code: invalid_api_key
+          message: The API key is invalid.
+      properties:
+        error:
+          $ref: "#/components/schemas/ErrorResponse_error"
+      required:
+      - error
+      type: object
+    createChatCompletion_request_messages_inner:
+      properties:
+        role:
+          enum:
+          - user
+          - assistant
+          - system
+          type: string
+        content:
+          type: string
+      required:
+      - content
+      - role
+      type: object
+    createChatCompletion_request:
+      properties:
+        model:
+          description: Model identifier.
+          example: demo-chat
+          type: string
+        messages:
+          items:
+            $ref: "#/components/schemas/createChatCompletion_request_messages_inner"
+          type: array
+      required:
+      - messages
+      - model
+      type: object
+    createChatCompletion_200_response_choices_inner_message:
+      example:
+        role: role
+        content: content
+      properties:
+        role:
+          type: string
+        content:
+          type: string
+      required:
+      - content
+      - role
+      type: object
+    createChatCompletion_200_response_choices_inner:
+      example:
+        message:
+          role: role
+          content: content
+      properties:
+        message:
+          $ref: "#/components/schemas/createChatCompletion_200_response_choices_inner_message"
+      required:
+      - message
+      type: object
+    createChatCompletion_200_response:
+      example:
+        id: id
+        model: model
+        choices:
+        - message:
+            role: role
+            content: content
+        - message:
+            role: role
+            content: content
+      properties:
+        id:
+          type: string
+        model:
+          type: string
+        choices:
+          items:
+            $ref: "#/components/schemas/createChatCompletion_200_response_choices_inner"
+          type: array
+      required:
+      - choices
+      - id
+      - model
+      type: object
+    ErrorResponse_error:
+      example:
+        code: invalid_api_key
+        message: The API key is invalid.
+      properties:
+        code:
+          example: invalid_api_key
+          type: string
+        message:
+          example: The API key is invalid.
+          type: string
+      required:
+      - code
+      - message
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: API key
+      description: Use your API token as a Bearer token.
+      scheme: bearer
+      type: http
+

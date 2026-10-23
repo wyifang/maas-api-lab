@@ -1,0 +1,26 @@
+
+# Java / Gradle build outputs
+generated-java/build/
+generated-java/.gradle/
+**/build/
+
+# Node.js dependencies and logs
+node_modules/
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# IDE and operating system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.log
