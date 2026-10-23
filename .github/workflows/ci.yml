@@ -1,0 +1,45 @@
+
+name: API Documentation CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Validate API docs and SDK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Check OpenAPI specification
+        run: npx --yes @redocly/cli@2.64.1 lint openapi/openapi.yaml
+
+      - name: Check Markdown links
+        shell: pwsh
+        run: ./scripts/check-doc-links.ps1
+
+      - name: Compile generated Java SDK
+        working-directory: generated-java
+        run: ./gradlew clean compileJava
+
+      - name: Build API Reference HTML
+        run: npx --yes @redocly/cli@2.64.1 build-docs openapi/openapi.yaml --output api-reference.html
