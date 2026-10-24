@@ -1,4 +1,4 @@
-﻿# MaaS API Documentation Engineering Lab
+# MaaS API Documentation Engineering Lab
 
 A hands-on API documentation engineering project demonstrating how to build, validate, generate, and maintain API documentation and SDK artifacts from an OpenAPI specification.
 
@@ -18,6 +18,7 @@ It brings together API design, reference documentation, SDK generation, develope
 - **Developer Guide** — Quickstart, authentication, first request, error handling, and troubleshooting.
 - **Local Mock Server** — Demonstrates successful requests and HTTP 401 error handling without calling a real API.
 - **Documentation Quality Check** — A reusable PowerShell script that checks Markdown relative links.
+- **GitHub Actions CI** — Automatically validates the OpenAPI specification, checks Markdown links, compiles the Java SDK, and builds the API Reference on pushes and pull requests targeting `main`.
 
 ## Technology Stack
 
@@ -29,6 +30,8 @@ It brings together API design, reference documentation, SDK generation, develope
 - Markdown
 - PowerShell
 - Git and GitHub
+- GitHub Actions
+- Redocly CLI lint and build-docs
 
 ## Repository Structure
 
@@ -56,6 +59,23 @@ Start with the [Developer Guide](docs/index.md).
 - [Troubleshooting](docs/troubleshooting.md)
 
 The generated API Reference is available in [`api-reference.html`](api-reference.html).
+
+## Continuous Integration
+
+This project uses GitHub Actions to run automated quality checks on pushes and pull requests targeting the `main` branch.
+
+The workflow is defined in `.github/workflows/ci.yml`.
+
+It performs the following checks:
+
+1. **OpenAPI validation** — Lints `openapi/openapi.yaml` with Redocly CLI.
+2. **Markdown link validation** — Runs the PowerShell documentation link checker.
+3. **Java SDK compilation** — Compiles the generated Java SDK using the Gradle Wrapper.
+4. **API Reference generation** — Builds HTML documentation from the OpenAPI specification.
+
+These checks help detect documentation and SDK build issues before changes are merged.
+
+The workflow runs on GitHub-hosted Linux runners, while the project can also be developed locally on Windows.
 
 ## Build and Validate
 
