@@ -20,6 +20,7 @@ import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -52,7 +53,7 @@ import org.openapitools.client.JSON;
 /**
  * CreateChatCompletionRequest
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-21T18:24:06.544744400+08:00[Asia/Shanghai]", comments = "Generator version: 7.26.0")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-10-25T07:23:49.134403200+08:00[Asia/Shanghai]", comments = "Generator version: 7.26.0")
 public class CreateChatCompletionRequest {
   public static final String SERIALIZED_NAME_MODEL = "model";
   @SerializedName(SERIALIZED_NAME_MODEL)
@@ -63,6 +64,11 @@ public class CreateChatCompletionRequest {
   @SerializedName(SERIALIZED_NAME_MESSAGES)
   @javax.annotation.Nonnull
   private List<CreateChatCompletionRequestMessagesInner> messages = new ArrayList<>();
+
+  public static final String SERIALIZED_NAME_TEMPERATURE = "temperature";
+  @SerializedName(SERIALIZED_NAME_TEMPERATURE)
+  @javax.annotation.Nullable
+  private BigDecimal temperature;
 
   public CreateChatCompletionRequest() {
   }
@@ -113,6 +119,27 @@ public class CreateChatCompletionRequest {
   }
 
 
+  public CreateChatCompletionRequest temperature(@javax.annotation.Nullable BigDecimal temperature) {
+    this.temperature = temperature;
+    return this;
+  }
+
+  /**
+   * Controls the randomness of the model response.
+   * minimum: 0
+   * maximum: 2
+   * @return temperature
+   */
+  @javax.annotation.Nullable
+  public BigDecimal getTemperature() {
+    return temperature;
+  }
+
+  public void setTemperature(@javax.annotation.Nullable BigDecimal temperature) {
+    this.temperature = temperature;
+  }
+
+
 
   @Override
   public boolean equals(Object o) {
@@ -124,12 +151,13 @@ public class CreateChatCompletionRequest {
     }
     CreateChatCompletionRequest createChatCompletionRequest = (CreateChatCompletionRequest) o;
     return Objects.equals(this.model, createChatCompletionRequest.model) &&
-        Objects.equals(this.messages, createChatCompletionRequest.messages);
+        Objects.equals(this.messages, createChatCompletionRequest.messages) &&
+        Objects.equals(this.temperature, createChatCompletionRequest.temperature);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(model, messages);
+    return Objects.hash(model, messages, temperature);
   }
 
   @Override
@@ -138,6 +166,7 @@ public class CreateChatCompletionRequest {
     sb.append("class CreateChatCompletionRequest {\n");
     sb.append("    model: ").append(toIndentedString(model)).append("\n");
     sb.append("    messages: ").append(toIndentedString(messages)).append("\n");
+    sb.append("    temperature: ").append(toIndentedString(temperature)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -156,7 +185,7 @@ public class CreateChatCompletionRequest {
 
   static {
     // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>(Arrays.asList("model", "messages"));
+    openapiFields = new HashSet<String>(Arrays.asList("model", "messages", "temperature"));
 
     // a set of required properties/fields (JSON key names)
     openapiRequiredFields = new HashSet<String>(Arrays.asList("model", "messages"));

@@ -53,6 +53,12 @@ paths:
                           - system
                       content:
                         type: string
+                temperature:
+                  type: number
+                  description: Controls the randomness of the model response.
+                  minimum: 0
+                  maximum: 2
+                  example: 0.7
 
       responses:
 

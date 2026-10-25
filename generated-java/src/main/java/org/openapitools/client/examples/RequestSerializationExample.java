@@ -23,7 +23,8 @@ public class RequestSerializationExample {
         CreateChatCompletionRequest request =
             new CreateChatCompletionRequest()
                 .model("demo-chat")
-                .addMessagesItem(message);
+                .addMessagesItem(message)
+                .temperature(new java.math.BigDecimal("0.7"));
 
         // 3. Convert the request object to JSON
         Gson gson = new GsonBuilder()

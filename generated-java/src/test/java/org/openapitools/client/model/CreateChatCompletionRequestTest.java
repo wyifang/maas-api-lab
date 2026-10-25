@@ -13,18 +13,24 @@
 
 package org.openapitools.client.model;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.openapitools.client.model.CreateChatCompletionRequestMessagesInner;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Model tests for CreateChatCompletionRequest
@@ -54,6 +60,19 @@ public class CreateChatCompletionRequestTest {
     @Test
     public void messagesTest() {
         // TODO: test messages
+    }
+
+    @Test
+    public void temperatureIsSerializedAsANumber() {
+        CreateChatCompletionRequest request =
+            new CreateChatCompletionRequest()
+                .model("demo-chat")
+                .temperature(new BigDecimal("0.7"));
+
+        JsonObject json = JsonParser.parseString(new Gson().toJson(request)).getAsJsonObject();
+
+        assertEquals(new BigDecimal("0.7"), json.get("temperature").getAsBigDecimal());
+        assertEquals(new BigDecimal("0.7"), request.getTemperature());
     }
 
 }

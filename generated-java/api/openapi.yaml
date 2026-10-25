@@ -109,6 +109,12 @@ components:
           items:
             $ref: "#/components/schemas/createChatCompletion_request_messages_inner"
           type: array
+        temperature:
+          description: Controls the randomness of the model response.
+          example: 0.7
+          maximum: 2
+          minimum: 0
+          type: number
       required:
       - messages
       - model
@@ -183,4 +189,3 @@ components:
       description: Use your API token as a Bearer token.
       scheme: bearer
       type: http
-
