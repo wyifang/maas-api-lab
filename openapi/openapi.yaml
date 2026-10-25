@@ -139,7 +139,7 @@ paths:
                 error:
                   code: internal_error
                   message: An internal server error occurred.
-                  
+
 components:
   securitySchemes:
     BearerAuth:

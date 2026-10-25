@@ -42,7 +42,8 @@ maas-api-lab/
 ├── openapi/
 │   └── openapi.yaml       # Source API specification
 ├── scripts/
-│   └── check-doc-links.ps1
+│   ├── check-doc-links.ps1
+│   └── normalize-line-endings.ps1
 ├── api-reference.html     # Generated API Reference
 ├── openapitools.json      # Generator configuration
 └── .gitignore
@@ -87,14 +88,24 @@ From the repository root, run:
 .\scripts\check-doc-links.ps1
 ```
 
-### 2. Compile the Java SDK
+### 2. Normalize Tracked Text File Line Endings
+
+The repository uses LF for tracked text files and CRLF for Windows `.bat` and `.cmd` scripts. To normalize tracked files that currently contain CRLF or mixed line endings, run:
+
+```powershell
+.\scripts\normalize-line-endings.ps1
+```
+
+Use `-WhatIf` to preview which files would be normalized.
+
+### 3. Compile the Java SDK
 
 ```powershell
 cd .\generated-java
 .\gradlew.bat clean compileJava
 ```
 
-### 3. Run the Local Mock API Example
+### 4. Run the Local Mock API Example
 
 Start the mock server in one PowerShell window:
 
@@ -110,7 +121,7 @@ In another PowerShell window, from `generated-java`, run:
 
 The example sends an HTTP request to the local mock server and demonstrates SDK response parsing. Other examples demonstrate error handling and request serialization.
 
-### 4. Rebuild the API Reference
+### 5. Rebuild the API Reference
 
 From the repository root:
 
